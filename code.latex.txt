@@ -1,0 +1,260 @@
+%% -*- coding: utf-8 -*-
+\documentclass[12pt,a4paper]{scrartcl} 
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{indentfirst}
+\usepackage{misccorr}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\begin{document}
+  \begin{titlepage}
+    \begin{center}
+      \large
+      МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ
+      
+      Федеральное государственное бюджетное образовательное учреждение высшего образования
+      
+      \textbf{АДЫГЕЙСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ}
+      \vspace{0.25cm}
+      
+      Инженерно-физический факультет
+      
+      Кафедра автоматизированных систем обработки информации и управления
+      \vfill
+
+      \vfill
+      
+      \textsc{Отчет по практике}\\[5mm]
+      
+      {\LARGE Решение системы линейных алгебраических уравнений методом Крамера.}
+      \bigskip
+      
+      1 курс, группа 1УТС
+    \end{center}
+    \vfill
+    
+    \newlength{\ML}
+    \settowidth{\ML}{«\underline{\hspace{0.7cm}}» \underline{\hspace{2cm}}}
+    \hfill\begin{minipage}{0.5\textwidth}
+      Выполнил:\\
+      \underline{\hspace{\ML}} А.\,О.~Закарян\\
+      «\underline{\hspace{0.7cm}}» \underline{\hspace{2cm}} 2023 г.
+    \end{minipage}%
+    \bigskip
+    
+    \hfill\begin{minipage}{0.5\textwidth}
+      Руководитель:\\
+      \underline{\hspace{\ML}} С.\,В.~Теплоухов\\
+      «\underline{\hspace{0.7cm}}» \underline{\hspace{2cm}} 2023 г.
+    \end{minipage}%
+    \vfill
+    
+    \begin{center}
+      Майкоп, 2023 г.
+    \end{center}
+  \end{titlepage}
+\section{Введение}
+\label{sec:intro}
+% Что должно быть во введении
+\begin{enumerate}
+ \item Задание
+ \item Код прилагающий к заданию
+ \item Скриншот программы
+ \end{enumerate}
+\large\tableofcontents
+\vspace{15\baselineskip}
+\section{Теория}
+\subsection{Техническое задание}
+\textbf {Задание:}
+Решение системы линейных алгебраических уравнений методом Крамера (количество неизвестных меньше 4).
+\subsection{Теоретическая часть}
+\begin{wrapfigure}
+  \begin{center}
+    \includegraphics[width=1\textwidth]{333.png}
+  \end{center}
+\end{wrapfigure}
+\section{Ход работы}
+\label{sec:exp}
+\subsection{Код прилагающий к заданию}
+\label{sec:exp:code}
+\begin{verbatim}
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+
+int main()
+{
+    setlocale(LC_ALL, "ru");
+    int n;
+    cout << "Введите количество неизвестных (от 2 до 3): ";
+    cin >> n;
+if (n < 2)
+{
+cout << "Такой системы уравнений не существует!" << endl;
+_getch();
+return 0;
+}
+else if (n > 3)
+{
+cout << "Количество переменных превышает допустимое значение!" << endl;
+ _getch();
+return 0;
+}
+
+    if (n == 2)
+    {
+
+    int a[2][2];
+    cout << "Введите коэффициенты системы (через пробел): " << endl;
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            cin >> a[i][j];
+
+    int b[2];
+    cout << "Введите вектор свободных членов (через пробел): " << endl;
+     for (int i = 0; i < n; i++)
+        cin >> b[i];
+
+    int det_a = a[0][0] * a[1][1] - a[0][1] * a[1][0];
+
+if (det_a == 0)
+{
+cout << "Ошибка! Определитель матрицы коэффициентов равен 0!" << endl;
+return 0;
+}
+
+        int det_x1[2][2], det_x2[2][2];
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (j == 0)
+                    det_x1[i][j] = b[i];
+                else
+                    det_x1[i][j] = a[i][j];
+            }
+        }
+
+    int x1 = det_x1[0][0] * det_x1[1][1] - det_x1[0][1] * det_x1[1][0];
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (j == 1)
+                    det_x2[i][j] = b[i];
+                else
+                    det_x2[i][j] = a[i][j];
+            }
+        }
+    int x2 = det_x2[0][0] * det_x2[1][1] - det_x2[0][1] * det_x2[1][0];
+
+        cout << "X1 = " << (double) x1 / det_a << endl;
+        cout << "X2 = " << (double) x2 / det_a << endl;
+
+        _getch();
+        return 0;
+    }
+
+    if (n == 3)
+    {
+
+    int a[3][3];
+    cout << "Введите коэффициенты системы (через пробел): " << endl;
+    for (int i = 0; i < n; i++)
+         for (int j = 0; j < n; j++)
+             cin >> a[i][j];
+
+    int b[3];
+    cout << "Введите вектор свободных членов (через пробел): " << endl;
+    for (int i = 0; i < n; i++)
+        cin >> b[i];
+
+int det_a = a[0][0] * a[1][1] * a[2][2] + a[1][0] * a[2][1] * a[0][2] + 
+a[0][1] * a[1][2] * a[2][0] - a[2][0] * a[1][1] * a[0][2] - a[1][0] *
+a[0][1] * a[2][2] - a[2][1] * a[1][2] * a[0][0];
+     if (det_a == 0)
+{
+cout << "Ошибка! Определитель матрицы коэффициентов равен 0!" << endl;
+return 0;
+}
+        int p1, p2, p3, x1;
+
+        int dx1[3][3];
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (j == 0)
+                    dx1[i][j] = b[i];
+                else
+                    dx1[i][j] = a[i][j];
+            }
+        }
+p1 = dx1[0][0] * dx1[1][1] * dx1[2][2] + dx1[1][0] * dx1[2][1] *
+dx1[0][2] + dx1[0][1] * dx1[1][2] * dx1[2][0];
+x1 = p1 - dx1[2][0] * dx1[1][1] * dx1[0][2] - dx1[1][0] * dx1[0][1] *
+dx1[2][2] - dx1[2][1] * dx1[1][2] * dx1[0][0];
+         
+        int dx2[3][3], x2;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (j == 1)
+                    dx2[i][j] = b[i];
+                else
+                    dx2[i][j] = a[i][j];
+            }
+        }
+p2 = dx2[0][0] * dx2[1][1] * dx2[2][2] + dx2[1][0] * dx2[2][1] *
+dx2[0][2] + dx2[0][1] * dx2[1][2] * dx2[2][0];
+x2 = p2 - dx2[2][0] * dx2[1][1] * dx2[0][2] - dx2[1][0] *
+dx2[0][1] * dx2[2][2] - dx2[2][1] * dx2[1][2] * dx2[0][0];
+
+
+        int dx3[3][3], x3;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (j == 2)
+                    dx3[i][j] = b[i];
+                else
+                    dx3[i][j] = a[i][j];
+            }
+        }
+ p3 = dx3[0][0] * dx3[1][1] * dx3[2][2] + dx3[1][0] * dx3[2][1] *
+ dx3[0][2] + dx3[0][1] * dx3[1][2] * dx3[2][0];
+x3 = p3 - dx3[2][0] * dx3[1][1] * dx3[0][2] - dx3[1][0] *
+dx3[0][1] * dx3[2][2] - dx3[2][1] * dx3[1][2] * dx3[0][0];
+
+
+        cout << "x1 = " << (double)x1 / det_a << endl;
+        cout << "x2 = " << (double)x2 / det_a << endl;
+        cout << "x3 = " << (double)x3 / det_a << endl;
+
+        _getch();
+        return 0;
+    }
+}
+\end{verbatim}
+\begin{wrapfigure}
+  \begin{center}
+    \includegraphics[width=1\textwidth]{1.png}
+  \end{center}
+  \caption{Рис.1 Скриншот программы}\label{fig:ex}
+\end{wrapfigure}
+  \begin{center}
+    \includegraphics[width=1\textwidth]{2.png}
+  \end{center}
+  \caption{Рис.2 Скриншот программы}\label{fig:ex}
+\begin{wrapfigure}
+  \begin{center}
+    \includegraphics[width=1\textwidth]{3.png}
+  \end{center}
+  \caption{Рис.3 Скриншот программы}\label{fig:ex}
+\end{wrapfigure}
+\end{document}
